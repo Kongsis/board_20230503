@@ -48,7 +48,10 @@
             <tr>
                 <th>image</th>
                 <td>
-                    <img src="${pageContext.request.contextPath}/upload/${boardFile.storedFileName}" alt="">
+                    <c:forEach items="${boardFileList}" var="boardFile">
+                        <img src="${pageContext.request.contextPath}/upload/${boardFile.storedFileName}"
+                             alt="" width="150" height="150">
+                    </c:forEach>
                 </td>
             </tr>
         </c:if>
