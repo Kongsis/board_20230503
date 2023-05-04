@@ -1,11 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
   User: user
-  Date: 2023-05-03
-  Time: 오전 11:12
+  Date: 2023-04-28
+  Time: 오후 2:04
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
@@ -16,37 +17,46 @@
 <body>
 <%@include file="../component/header.jsp" %>
 <%@include file="../component/nav.jsp" %>
-    <h2>boardDetail.jsp</h2>
-    <div id="section">
-        <table>
+<div id="section">
+    <table>
+        <tr>
+            <th>id</th>
+            <td>${board.id}</td>
+        <tr>
+            <th>writer</th>
+            <td>${board.boardWriter}</td>
+        </tr>
+        <tr>
+            <th>date</th>
+            <td>
+                <fmt:formatDate value="${board.boardCreatedDate}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
+            </td>
+        </tr>
+        <tr>
+            <th>hits</th>
+            <td>${board.boardHits}</td>
+        </tr>
+        <tr>
+            <th>title</th>
+            <td>${board.boardTitle}</td>
+        </tr>
+        <tr>
+            <th>contents</th>
+            <td>${board.boardContents}</td>
+        </tr>
+        <c:if test="${board.fileAttached == 1}">
             <tr>
-                <th>id</th>
-                <th>작성자</th>
-                <th>글비밀번호</th>
-                <th>제목</th>
-                <th>내용</th>
-                <th>작성시간</th>
-                <th>조회수</th>
-                <th>첨부파일</th>
-                <th>삭제</th>
+                <th>image</th>
+                <td>
+                    <img src="${pageContext.request.contextPath}/upload/${boardFile.storedFileName}" alt="">
+                </td>
             </tr>
-            <tr>
-                <td>${board.id}</td>
-                <td>${board.boardWriter}</td>
-                <td>${board.boardPass}</td>
-                <td>${board.boardTitle}</td>
-                <td>${board.boardContents}</td>
-<%--                <td>${board.boardCreatedDate}</td>--%>
-                <td><fmt:formatDate value="${board.boardCreatedDate}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
-                <td>${board.boardHits}</td>
-                <td>${board.fileAttached}</td>
-<%--                <td><button onclick="board_delete('${board.id}')">삭제</button></td>--%>
-            </tr>
-        </table>
-        <button onclick="board_list()">목록</button>
-        <button onclick="board_update()">수정</button>
-        <button onclick="board_delete('${board.id}')">삭제</button>
-    </div>
+        </c:if>
+    </table>
+    <button onclick="board_list()">목록</button>
+    <button onclick="board_update()">수정</button>
+    <button onclick="board_delete()">삭제</button>
+</div>
 <%@include file="../component/footer.jsp" %>
 </body>
 <script>
@@ -55,10 +65,11 @@
     }
     const board_update = () => {
         const id = '${board.id}';
-        location.href = "/board/update?id="+id;
+        location.href = "/board/update?id=" + id;
     }
-    const board_delete = (id) => {
-        location.href = "/board/delete-check?id="+id;
+    const board_delete = () => {
+        const id = '${board.id}';
+        location.href = "/board/delete-check?id=" + id;
     }
 </script>
 </html>

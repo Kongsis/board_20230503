@@ -4,5 +4,6 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.icia.board.dto.BoardDTO" alias="board"></typeAlias>
+        <typeAlias type="com.icia.board.dto.BoardFileDTO" alias="boardFile"></typeAlias>
     </typeAliases>
 </configuration>

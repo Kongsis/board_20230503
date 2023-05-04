@@ -19,7 +19,6 @@
 <body>
 <%@include file="../component/header.jsp" %>
 <%@include file="../component/nav.jsp" %>
-
   <div id="section">
     <table>
       <tr>
