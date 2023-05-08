@@ -14,6 +14,9 @@
     <li>
       <a href="/board/">글목록</a>
     </li>
+    <li>
+      <a href="/board/paging">페이징목록</a>
+    </li>
     <li class="login-name" id="login-area">
 
     </li>
