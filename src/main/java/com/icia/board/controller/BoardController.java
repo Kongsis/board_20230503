@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,22 +42,57 @@ public class BoardController {
         return "boardPages/boardList";
     }
 
+//    @GetMapping("/paging")
+//    public String paging(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+//                         Model model) {
+//        System.out.println("page = " + page);
+//        // 사용자가 요청한 페이지에 해당하는 글 목록 데이터
+//        List<BoardDTO> boardDTOList = boardService.pagingList(page);
+//        System.out.println("boardDTOList = " + boardDTOList);
+//        // 하단에 보여줄 페이지 번호 목록 데이터
+//        PageDTO pageDTO = boardService.pagingParam(page);
+//        model.addAttribute("boardList", boardDTOList);
+//        model.addAttribute("paging", pageDTO);
+//        return "boardPages/boardPaging";
+//    }
+
     @GetMapping("/paging")
     public String paging(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                         @RequestParam(value = "q", required = false, defaultValue = "") String q,
                          Model model) {
-        System.out.println("page = " + page);
-        // 사용자가 요청한 페이지에 해당하는 글 목록 데이터
-        List<BoardDTO> boardDTOList = boardService.pagingList(page);
-        System.out.println("boardDTOList = " + boardDTOList);
-        // 하단에 보여줄 페이지 번호 목록 데이터
-        PageDTO pageDTO = boardService.pagingParam(page);
+        System.out.println("page = " + page + ", q = " + q);
+        List<BoardDTO> boardDTOList = null;
+        PageDTO pageDTO = null;
+        if (q.equals("")) {
+            // 사용자가 요청한 페이지에 해당하는 글 목록 데이터
+            boardDTOList = boardService.pagingList(page);
+            // 하단에 보여줄 페이지 번호 목록 데이터
+            pageDTO = boardService.pagingParam(page);
+        } else {
+            boardDTOList = boardService.searchList(q, page);
+            pageDTO = boardService.pagingSearchParam(page, q);
+        }
         model.addAttribute("boardList", boardDTOList);
         model.addAttribute("paging", pageDTO);
+        model.addAttribute("q", q);
+
+        return "boardPages/boardPaging";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam("q") String q, // 검색어
+                         @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                         Model model) {
+        List<BoardDTO> boardDTOList = boardService.searchList(q, page);
+        PageDTO pageDTO = boardService.pagingSearchParam(page, q);
+        model.addAttribute("boardList", boardDTOList);
+        model.addAttribute("paging", pageDTO);
+        model.addAttribute("q", q);
         return "boardPages/boardPaging";
     }
 
     @GetMapping
-    public String findById(@RequestParam("id") Long id, Model model) {
+    public String findById(@RequestParam("id") Long id, Model model, HttpSession session) {
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
