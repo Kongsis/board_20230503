@@ -61,8 +61,8 @@ public class BoardRepository {
         return sql.selectList("Board.search", pagingParams);
     }
 
-    public int boardSearchCount(String q) {
-        return sql.selectOne("Board.searchCount", q);
+    public int boardSearchCount(Map<String, Object> pagingParams) {
+        return sql.selectOne("Board.searchCount", pagingParams);
 
     }
 }

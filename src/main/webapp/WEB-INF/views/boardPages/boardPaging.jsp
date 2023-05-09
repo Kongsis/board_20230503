@@ -23,6 +23,10 @@
   <div id="section">
     <div class="container" id="search-area">
       <form action="/board/paging" method="get">
+        <select name="type">
+          <option value="boardTitle">제목</option>
+          <option value="boardWriter">작성자</option>
+        </select>
         <input type="text" name="q" placeholder="검색어를 입력하세요">
         <input type="submit" value="검색">
       </form>
@@ -40,7 +44,7 @@
           <tr>
             <td>${board.id}</td>
             <td>
-              <a href="/board?id=${board.id}&page=${paging.page}">${board.boardTitle}</a>
+              <a href="/board?id=${board.id}&page=${paging.page}&q=${q}&type=${type}">${board.boardTitle}</a>
             </td>
             <td>${board.boardWriter}</td>
             <td>
@@ -63,7 +67,7 @@
           <%-- 1페이지가 아닌 경우에는 [이전]을 클릭하면 현재 페이지보다 1 작은 페이지 요청 --%>
           <c:otherwise>
             <li class="page-item">
-              <a class="page-link" href="/board/paging?page=${paging.page-1}&q=${q}">[이전]</a>
+              <a class="page-link" href="/board/paging?page=${paging.page-1}&q=${q}&type=${type}">[이전]</a>
             </li>
           </c:otherwise>
         </c:choose>
@@ -80,7 +84,7 @@
 
             <c:otherwise>
               <li class="page-item">
-                <a class="page-link" href="/board/paging?page=${i}&q=${q}">${i}</a>
+                <a class="page-link" href="/board/paging?page=${i}&q=${q}&type=${type}">${i}</a>
               </li>
             </c:otherwise>
           </c:choose>
@@ -94,7 +98,7 @@
           </c:when>
           <c:otherwise>
             <li class="page-item">
-              <a class="page-link" href="/board/paging?page=${paging.page+1}&q=${q}">[다음]</a>
+              <a class="page-link" href="/board/paging?page=${paging.page+1}&q=${q}&type=${type}">[다음]</a>
             </li>
           </c:otherwise>
         </c:choose>

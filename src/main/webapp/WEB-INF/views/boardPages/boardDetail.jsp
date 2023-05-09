@@ -138,7 +138,10 @@
         });
     }
     const board_list = () => {
-        location.href = "/board/";
+        const type = '${type}';
+        const q = '${q}';
+        const page = '${page}';
+        location.href = "/board/paging?page=" + page + "&type=" + type + "&q=" + q;
     }
     const board_update = () => {
         const id = '${board.id}';

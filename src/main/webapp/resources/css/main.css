@@ -52,15 +52,15 @@
     float: right;
 }
 
-#section table {
-    margin: auto;
-    border: 1px solid black;
-}
+/*#section table {*/
+/*    margin: auto;*/
+/*    border: 1px solid black;*/
+/*}*/
 
-#section table tr,th,td {
-    padding: 5px;
-    border: 1px solid black;
-}
+/*#section table tr,th,td {*/
+/*    padding: 5px;*/
+/*    border: 1px solid black;*/
+/*}*/
 
 input {
     display: block;
